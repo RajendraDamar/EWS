@@ -1,0 +1,334 @@
+{
+  "last_node_id": 15,
+  "last_link_id": 18,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [50, 50],
+      "size": {"0": 315, "1": 314},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [1], "shape": 3},
+        {"name": "MASK", "type": "MASK", "links": null, "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "LoadImage"},
+      "widgets_values": ["example.png", "image"]
+    },
+    {
+      "id": 2,
+      "type": "BLIP2Loader",
+      "pos": [400, 50],
+      "size": {"0": 315, "1": 146},
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {"name": "blip2_model", "type": "BLIP2MODEL", "links": [2], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "BLIP2Loader"},
+      "widgets_values": ["Salesforce-blip2-flan-t5-xl", "fp16", "disable"]
+    },
+    {
+      "id": 3,
+      "type": "BLIP2Run",
+      "pos": [750, 50],
+      "size": {"0": 400, "1": 550},
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {"name": "blip2_model", "type": "BLIP2MODEL", "link": 2},
+        {"name": "image", "type": "IMAGE", "link": 1}
+      ],
+      "outputs": [
+        {"name": "caption", "type": "STRING", "links": [3, 4], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "BLIP2Run"},
+      "widgets_values": [
+        "detailed_caption",
+        "Write a comprehensive and detailed description of this image. Include specific details about: the main subjects and objects, their positions and interactions, colors and lighting, background elements, artistic style or photographic technique, mood and atmosphere, any text or symbols visible, materials and textures, spatial relationships, and any other notable visual elements. Be thorough and descriptive.",
+        400,
+        0.3,
+        0.95,
+        50,
+        1.0,
+        1.2,
+        8,
+        "detailed",
+        false
+      ]
+    },
+    {
+      "id": 4,
+      "type": "ShowText",
+      "pos": [1200, 50],
+      "size": {"0": 300, "1": 200},
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {"name": "text", "type": "STRING", "link": 3}
+      ],
+      "properties": {"Node name for S&R": "ShowText"},
+      "widgets_values": [""]
+    },
+    {
+      "id": 5,
+      "type": "SaveText",
+      "pos": [1200, 300],
+      "size": {"0": 300, "1": 140},
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {"name": "text", "type": "STRING", "link": 4}
+      ],
+      "properties": {"Node name for S&R": "SaveText"},
+      "widgets_values": ["captions/", "caption", "txt", "false"]
+    },
+    {
+      "id": 6,
+      "type": "BLIP2Run",
+      "pos": [50, 650],
+      "size": {"0": 400, "1": 550},
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {"name": "blip2_model", "type": "BLIP2MODEL", "link": 5},
+        {"name": "image", "type": "IMAGE", "link": 6}
+      ],
+      "outputs": [
+        {"name": "caption", "type": "STRING", "links": [7], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "BLIP2Run"},
+      "widgets_values": [
+        "vqa",
+        "Please provide a comprehensive analysis of this image. Describe in detail: What are the main subjects or objects? What is the setting or environment? What colors, lighting, and mood are present? What is the composition and artistic style? Include specific details about textures, materials, spatial relationships, and any notable visual elements.",
+        350,
+        0.4,
+        0.95,
+        50,
+        1.0,
+        1.2,
+        6,
+        "detailed",
+        false
+      ]
+    },
+    {
+      "id": 7,
+      "type": "BLIP2Run",
+      "pos": [500, 650],
+      "size": {"0": 400, "1": 550},
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {"name": "blip2_model", "type": "BLIP2MODEL", "link": 8},
+        {"name": "image", "type": "IMAGE", "link": 9}
+      ],
+      "outputs": [
+        {"name": "caption", "type": "STRING", "links": [10], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "BLIP2Run"},
+      "widgets_values": [
+        "detailed_caption",
+        "",
+        300,
+        0.2,
+        0.95,
+        50,
+        1.0,
+        1.3,
+        10,
+        "artistic",
+        false
+      ]
+    },
+    {
+      "id": 8,
+      "type": "BLIP2Run",
+      "pos": [950, 650],
+      "size": {"0": 400, "1": 550},
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {"name": "blip2_model", "type": "BLIP2MODEL", "link": 11},
+        {"name": "image", "type": "IMAGE", "link": 12}
+      ],
+      "outputs": [
+        {"name": "caption", "type": "STRING", "links": [13], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "BLIP2Run"},
+      "widgets_values": [
+        "vqa",
+        "Conduct a thorough technical analysis of this image. Describe: What are the dominant colors and color relationships? What lighting conditions and techniques are evident? What is the composition and framing? What technical photographic or artistic elements can you identify? Include details about depth, perspective, textures, and any technical aspects of the image creation.",
+        300,
+        0.3,
+        0.95,
+        50,
+        1.0,
+        1.2,
+        7,
+        "technical",
+        false
+      ]
+    },
+    {
+      "id": 9,
+      "type": "ShowText",
+      "pos": [50, 1250],
+      "size": {"0": 300, "1": 200},
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {"name": "text", "type": "STRING", "link": 7}
+      ],
+      "properties": {"Node name for S&R": "ShowText"},
+      "widgets_values": ["VQA Output"]
+    },
+    {
+      "id": 10,
+      "type": "ShowText",
+      "pos": [400, 1250],
+      "size": {"0": 300, "1": 200},
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {"name": "text", "type": "STRING", "link": 10}
+      ],
+      "properties": {"Node name for S&R": "ShowText"},
+      "widgets_values": ["Artistic Caption"]
+    },
+    {
+      "id": 11,
+      "type": "ShowText",
+      "pos": [750, 1250],
+      "size": {"0": 300, "1": 200},
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {"name": "text", "type": "STRING", "link": 13}
+      ],
+      "properties": {"Node name for S&R": "ShowText"},
+      "widgets_values": ["Technical Analysis"]
+    },
+    {
+      "id": 12,
+      "type": "ImageDuplicator",
+      "pos": [50, 400],
+      "size": {"0": 200, "1": 80},
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {"name": "image", "type": "IMAGE", "link": 14}
+      ],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [5, 6, 8, 9, 11, 12], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "ImageDuplicator"},
+      "widgets_values": []
+    },
+    {
+      "id": 13,
+      "type": "PreviewImage",
+      "pos": [300, 400],
+      "size": {"0": 300, "1": 200},
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {"name": "images", "type": "IMAGE", "link": 15}
+      ],
+      "properties": {"Node name for S&R": "PreviewImage"},
+      "widgets_values": []
+    },
+    {
+      "id": 14,
+      "type": "StringCombiner",
+      "pos": [1100, 1250],
+      "size": {"0": 400, "1": 300},
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {"name": "string1", "type": "STRING", "link": 16},
+        {"name": "string2", "type": "STRING", "link": 17},
+        {"name": "string3", "type": "STRING", "link": 18}
+      ],
+      "outputs": [
+        {"name": "combined_string", "type": "STRING", "links": [], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "StringCombiner"},
+      "widgets_values": [
+        "DETAILED CAPTION:\n{string1}\n\nCREATIVE ANALYSIS:\n{string2}\n\nTECHNICAL DETAILS:\n{string3}",
+        "\n---\n"
+      ]
+    },
+    {
+      "id": 15,
+      "type": "Note",
+      "pos": [50, 1500],
+      "size": {"0": 600, "1": 300},
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "properties": {"Node name for S&R": "Note"},
+      "widgets_values": [
+        "BLIP2-FLAN-T5 Image Captioning Workflow\n\nBased on Reddit community workflows and proven implementations:\n\n1. Load your image using LoadImage node\n2. BLIP2Loader loads the Salesforce-blip2-flan-t5-xl model\n3. Multiple BLIP2Run nodes demonstrate different approaches:\n   - Detailed captioning with enhanced prompts\n   - Visual Question Answering (VQA)\n   - Artistic analysis\n   - Technical description\n\n4. Different prompt styles (detailed, creative, artistic, technical)\n5. Adjustable generation parameters for different output styles\n6. Text output display and saving capabilities\n7. Combined output for comprehensive analysis\n\nThis workflow is based on community-tested implementations from Reddit\nand proven custom node architectures. Adjust parameters as needed."
+      ]
+    }
+  ],
+  "links": [
+    [1, 1, 0, 3, 1, "IMAGE"],
+    [2, 2, 0, 3, 0, "BLIP2MODEL"],
+    [3, 3, 0, 4, 0, "STRING"],
+    [4, 3, 0, 5, 0, "STRING"],
+    [5, 12, 0, 6, 0, "BLIP2MODEL"],
+    [6, 12, 0, 6, 1, "IMAGE"],
+    [7, 6, 0, 9, 0, "STRING"],
+    [8, 12, 0, 7, 0, "BLIP2MODEL"],
+    [9, 12, 0, 7, 1, "IMAGE"],
+    [10, 7, 0, 10, 0, "STRING"],
+    [11, 12, 0, 8, 0, "BLIP2MODEL"],
+    [12, 12, 0, 8, 1, "IMAGE"],
+    [13, 8, 0, 11, 0, "STRING"],
+    [14, 1, 0, 12, 0, "IMAGE"],
+    [15, 1, 0, 13, 0, "IMAGE"],
+    [16, 3, 0, 14, 0, "STRING"],
+    [17, 6, 0, 14, 1, "STRING"],
+    [18, 8, 0, 14, 2, "STRING"]
+  ],
+  "groups": [
+    {
+      "title": "Main Image Captioning",
+      "bounding": [25, 25, 1500, 600],
+      "color": "#3f789e",
+      "font_size": 24
+    },
+    {
+      "title": "Multi-Style Analysis",
+      "bounding": [25, 625, 1400, 600],
+      "color": "#a1309b",
+      "font_size": 24
+    },
+    {
+      "title": "Output Display & Combination",
+      "bounding": [25, 1225, 1500, 400],
+      "color": "#b06634",
+      "font_size": 24
+    }
+  ],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
